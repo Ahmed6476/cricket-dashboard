@@ -23,6 +23,7 @@ import Login from "./components/login/index"
 import Signup from "./components/signup/index"
 import Dashboard from "./components/dashboard/index"
 import Profile from "./components/profile/index"
+import ScoreCard from "./components/ScoreCard/index"
 
 import { GlobalContext } from './context/Context';
 import { useContext } from "react";
@@ -92,6 +93,7 @@ function App() {
               <Nav className="me-auto">
                 <Nav.Link onClick={() => { history.push("/") }}>Dashboard</Nav.Link>
                 <Nav.Link onClick={() => { history.push("/profile") }}>Profile</Nav.Link>
+                <Nav.Link onClick={() => { history.push("/ScoreCard")}}>ScoreCard</Nav.Link>
 
               </Nav>
               <Form className="d-flex">
@@ -144,6 +146,9 @@ function App() {
           </Route>
           <Route exact path="/profile">
             <Profile />
+          </Route>
+          <Route exact path="/ScoreCard">
+          <ScoreCard />
           </Route>
 
           {/* <Redirect to="/" /> */}

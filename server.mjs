@@ -28,13 +28,12 @@ const User = mongoose.model('User', {
     created: { type: Date, default: Date.now },
 });
 const Post = mongoose.model("Post", {
-    PlayingTeams: String,
-    FirstBatsman: String,
-    SecondBatsman: String,
-    Bowler:String,
-    Target:String,
+    postText: String,
+    wicketsA: String,
+    oversA: String,
+    runsA: String,
+    TeamA: String,
     created: { type: Date, default: Date.now },
-
     userId: String,
     name: String,
     email: String,
@@ -84,7 +83,7 @@ app.post('/api/v1/login', (req, res, next) => {
                         res.cookie("token", token, {
                             httpOnly: true,
                             // expires: (new Date().getTime + 300000), //5 minutes
-                            maxAge: 300000
+                            maxAge: 500000
                         });
 
                         res.send({
@@ -199,33 +198,41 @@ app.delete('/api/v1/profile', (req, res) => {
 
 app.post("/api/v1/post", (req, res) => {
     const newPost = new Post({
-        PlayingTeams: req.body.PlayingTeams,
-        FirstBatsman : req.body.FirstBatsman,
-        SecondBatsman : req.body.SecondBatsman,
-        Bowler : req.body.Bowler,
-        Target : req.body.Target,
+        postText: req.body.postText,
+        // wicketsText: req.body.wicketsText,
+        wicketsA : req.body.wicketsA,
+        // oversText: req.body.oversText,
+        oversA : req.body.oversA,
+        // team1Text: req.body.team1Text,
+        runsA : req.body.runsA,
+        // team2Text: req.body.team2Text,
+        TeamA : req.body.TeamA,
+        // gender: req.body.gender,
         userId: req.body._decoded._id,
         name: req.body._decoded.name,
         email: req.body._decoded.email
     });
     newPost.save().then(() => {
         console.log("Post created");
-
+        
         io.emit("POSTS", {
-            PlayingTeams: req.body.PlayingTeams,
-            FirstBatsman : req.body.FirstBatsman,
-        SecondBatsman : req.body.SecondBatsman,
-        Bowler : req.body.Bowler,
-        Target : req.body.Target,
+            postText: req.body.postText,
+        // wicketsText: req.body.wicketsText,
+        wicketsA : req.body.wicketsA,
+        // oversText: req.body.oversText,
+        oversA : req.body.oversA,
+        // team1Text: req.body.team1Text,
+        runsA : req.body.runsA,
+        // team2Text: req.body.team2Text,
+        TeamA : req.body.TeamA,
+            // gender: req.body.gender,
             userId: req.body._decoded._id,
             name: req.body._decoded.name,
             email: req.body._decoded.email
         });
-
         res.send("Post created");
     });
 });
-
 app.delete("/api/v1/post", (req, res) => {
     Post.deleteOne({ _id: req.body.id, userId: req.body._decoded._id }, (err, data) => {
         res.send("Post deleted");

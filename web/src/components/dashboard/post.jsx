@@ -2,32 +2,26 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-const ExpandMore = styled((props) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-    }),
-}));
+
+// const ExpandMore = styled((props) => {
+//     const { expand, ...other } = props;
+//     return <IconButton {...other} />;
+// })(({ theme, expand }) => ({
+//     transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+//     marginLeft: 'auto',
+//     transition: theme.transitions.create('transform', {
+//         duration: theme.transitions.duration.shortest,
+//     }),
+// }));
 
 export default function RecipeReviewCard(props) {
-    const { PlayingTeams,FirstBatsman, email, name, timestamp } = props;
+    const { text, team1, team2, toss, overs, wickets, email, name, timestamp } = props;
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
@@ -35,36 +29,34 @@ export default function RecipeReviewCard(props) {
     };
 
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 1600 }}>
             <CardHeader
                 avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                        {name[0]}
+                    <Avatar aria-label="recipe">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/1/10/ICC_Men%27s_T20_World_Cup_2021_logo.svg" alt="" width="30" />
                     </Avatar>
                 }
-                action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                    </IconButton>
-                }
-                title={name}
-                subheader={email}
+                title="ICC Men's T20 World Cup 2021"
+                subheader="Live Match"
                 
             />
             
             <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                    {PlayingTeams}<br/>
-                    {FirstBatsman}
+            <Typography variant="h4" color="text.secondary">
+                    {team2} 
+                </Typography>
+                <Typography variant="h4" color="text.secondary">
+                    {team1}/{wickets}
+                </Typography>
+                <Typography variant="h5" color="text.secondary">
+                    {text}  
+                </Typography>
+
+                <Typography variant="h5" color="text.secondary">
+                    {overs} Overs
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                    <ShareIcon />
-                </IconButton>
             </CardActions>
             
         </Card>
