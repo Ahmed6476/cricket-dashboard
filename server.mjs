@@ -27,12 +27,24 @@ const User = mongoose.model('User', {
     password: String,
     created: { type: Date, default: Date.now },
 });
-const Post = mongoose.model("Post", {
-    postText: String,
-    wicketsA: String,
-    oversA: String,
-    runsA: String,
-    TeamA: String,
+const Score = mongoose.model("Score", {
+    toss: String,
+        teamA: String,
+        teamB:String,
+        wickets: String,
+        runs:String,
+        overs: String,
+        bowler: String,
+        bowlerOvers: String,
+        bowlerRuns: String,
+        bowlerWickets: String,
+        batsmanOne: String,
+        batsmanOneRuns: String,
+        batsmanOneBowls: String,
+        batsmanTwo: String,
+        batsmanTwoRuns: String,
+        batsmanTwoBowls: String,
+        target: String,
     created: { type: Date, default: Date.now },
     userId: String,
     name: String,
@@ -196,41 +208,76 @@ app.delete('/api/v1/profile', (req, res) => {
     res.send('profile deleted')
 })
 
-app.post("/api/v1/post", (req, res) => {
-    const newPost = new Post({
-        postText: req.body.postText,
-        // wicketsText: req.body.wicketsText,
-        wicketsA : req.body.wicketsA,
-        // oversText: req.body.oversText,
-        oversA : req.body.oversA,
-        // team1Text: req.body.team1Text,
-        runsA : req.body.runsA,
-        // team2Text: req.body.team2Text,
-        TeamA : req.body.TeamA,
-        // gender: req.body.gender,
+app.post("/api/v1/score", (req, res) => {
+    const newScore = new Score({
+        // postText: req.body.postText,
+        // // wicketsText: req.body.wicketsText,
+        // wicketsA : req.body.wicketsA,
+        // // oversText: req.body.oversText,
+        // oversA : req.body.oversA,
+        // // team1Text: req.body.team1Text,
+        // runsA : req.body.runsA,
+        // // team2Text: req.body.team2Text,
+        // TeamA : req.body.TeamA,
+        // // gender: req.body.gender,
+
+        toss: req.body.toss,
+        teamA: req.body.teamA,
+        teamB: req.body.teamB,
+        wickets: req.body.wickets,
+        runs:req.body.runs,
+        overs: req.body.overs,
+        bowler: req.body.bowler,
+        bowlerOvers: req.body.bowlerOvers,
+        bowlerRuns: req.body.bowlerRuns,
+        bowlerWickets: req.body.bowlerWickets,
+        batsmanOne: req.body.batsmanOne,
+        batsmanOneRuns:req.body.batsmanOneBowls,
+        batsmanOneBowls: req.body.batsmanOneBowls,
+        batsmanTwo: req.body.batsmanTwo,
+        batsmanTwoRuns: req.body.batsmanTwoRuns,
+        batsmanTwoBowls: req.body.batsmanTwoBowls,
+        target: req.body.target,
         userId: req.body._decoded._id,
         name: req.body._decoded.name,
         email: req.body._decoded.email
     });
-    newPost.save().then(() => {
-        console.log("Post created");
+    newScore.save().then(() => {
+        console.log("Score created");
         
         io.emit("POSTS", {
-            postText: req.body.postText,
-        // wicketsText: req.body.wicketsText,
-        wicketsA : req.body.wicketsA,
-        // oversText: req.body.oversText,
-        oversA : req.body.oversA,
-        // team1Text: req.body.team1Text,
-        runsA : req.body.runsA,
-        // team2Text: req.body.team2Text,
-        TeamA : req.body.TeamA,
-            // gender: req.body.gender,
+            toss: req.body.toss,
+        teamA: req.body.teamA,
+        teamB: req.body.teamB,
+        wickets: req.body.wickets,
+        runs:req.body.runs,
+        overs: req.body.overs,
+        bowler: req.body.bowler,
+        bowlerOvers: req.body.bowlerOvers,
+        bowlerRuns: req.body.bowlerRuns,
+        bowlerWickets: req.body.bowlerWickets,
+        batsmanOne: req.body.batsmanOne,
+        batsmanOneRuns:req.body.batsmanOneBowls,
+        batsmanOneBowls: req.body.batsmanOneBowls,
+        batsmanTwo: req.body.batsmanTwo,
+        batsmanTwoRuns: req.body.batsmanTwoRuns,
+        batsmanTwoBowls: req.body.batsmanTwoBowls,
+        target: req.body.target,
+        //     postText: req.body.postText,
+        // // wicketsText: req.body.wicketsText,
+        // wicketsA : req.body.wicketsA,
+        // // oversText: req.body.oversText,
+        // oversA : req.body.oversA,
+        // // team1Text: req.body.team1Text,
+        // runsA : req.body.runsA,
+        // // team2Text: req.body.team2Text,
+        // TeamA : req.body.TeamA,
+        //     // gender: req.body.gender,
             userId: req.body._decoded._id,
             name: req.body._decoded.name,
             email: req.body._decoded.email
         });
-        res.send("Post created");
+        res.send("Score created");
     });
 });
 app.delete("/api/v1/post", (req, res) => {
@@ -250,19 +297,25 @@ app.put("/api/v1/post", (req, res) => {
     });
 });
 
-app.get("/api/v1/posts", (req, res) => {
+app.get("/api/v1/score", (req, res) => {
 
-    const page = Number(req.query.page);
+    // const page = Number(req.query.page);
 
-    console.log("page: ", page);
+    // console.log("page: ", page);
 
-    Post.find({})
-        .sort({ created: "desc" })
-        .skip(page)
-        .limit(2)
-        .exec(function (err, data) {
-            res.send(data);
-        });
+    // Post.find({})
+    //     .sort({ created: "desc" })
+    //     .skip(page)
+    //     .limit(2)
+    //     .exec(function (err, data) {
+    //         res.send(data);
+    //     });
+
+    Score.findOne({})
+    .sort({_id:'desc'})
+    .exec(function(err,data){
+        res.send(data);
+    })
 });
 
 app.get("/**", (req, res, next) => {
